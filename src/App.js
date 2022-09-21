@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useSelector, useDispatch } from "react-redux";
 
-function App() {
+import {
+  addStudent,
+  addString,
+  selectworkerList,
+  selectStudentList,
+} from "./Reducers/StudentSlice";
+
+export default function App() {
+  const studentList = useSelector(selectStudentList);
+  const workerList = useSelector(selectworkerList);
+  const dispatch = useDispatch( );
+
+
+   function UserDataFromInput()
+{
+  let name =document.getElementById('name').value;
+  let id=document.getElementById('id').value;
+  let newstudent=
+    {name:name,id:id}
+  dispatch(addStudent(newstudent))
+
+  console.log(name + id)
+}
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> student data</h1>
+     
+{studentList.map((data) => (
+  <div>
+    <h1>Student_Name: {data.name}</h1>
+    <p>Id:{data.id}</p>
+  </div>
+))}
+     <form >
+     Name: <input type="text" id="name"/>
+     Id: <input type="number" id="id"/>
+     </form>
+     
+     <button onClick={UserDataFromInput}>AddName</button>
+      {/* <button onClick={() => dispatch(addStudent())}>AddName</button> */}
     </div>
   );
 }
 
-export default App;
