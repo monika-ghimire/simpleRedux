@@ -1,15 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 import {
   addStudent,
   addString,
-  selectworkerList,
+  selectTagList,
   selectStudentList,
+  loadTagList,
 } from "./Reducers/StudentSlice";
+
+
+
+
 
 export default function App() {
   const studentList = useSelector(selectStudentList);
-  const workerList = useSelector(selectworkerList);
+  const tagList = useSelector(selectTagList);
   const dispatch = useDispatch( );
 
 
@@ -20,9 +26,12 @@ export default function App() {
   let newstudent=
     {name:name,id:id}
   dispatch(addStudent(newstudent))
-
-  console.log(name + id)
 }
+
+useEffect(() => {   
+      dispatch(loadTagList())
+     },[]);
+
   return (
     <div className="App">
       <h1> student data</h1>
@@ -31,8 +40,20 @@ export default function App() {
   <div>
     <h1>Student_Name: {data.name}</h1>
     <p>Id:{data.id}</p>
+ 
   </div>
 ))}
+    
+    {
+      tagList.map((x)=>(
+        <div>
+          <h1>tagList</h1>
+           <h1>tagid: {x.tagId}</h1>
+        <p>name:{x.name}</p>
+        </div>
+       
+     ))}
+
      <form >
      Name: <input type="text" id="name"/>
      Id: <input type="number" id="id"/>
